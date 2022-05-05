@@ -5,18 +5,18 @@ namespace Common
     public class ShaderLoader
     {
         private static GL _gl;
-        private static Dictionary<string, uint> _programs;
+        private static Dictionary<string, Shader> _programs;
         static ShaderLoader()
         {
             _gl = Factory.GetOpenGL();
-            _programs = new Dictionary<string, uint>();
+            _programs = new Dictionary<string, Shader>();
         }
 
-        public static uint Get(string name)
+        public static Shader Get(string name)
         {
             return _programs[name];
         }
-        public static uint First()
+        public static Shader First()
         {
             return _programs.Values.First();
         }
@@ -28,7 +28,9 @@ namespace Common
 
             var glVertextShaderId = CreateShader(vertexShaderPath, _ShaderType.VertexShader);
             var glFragmentShaderId = CreateShader(fragmentShaderPath, _ShaderType.FragmentShader);
-            _programs[name] = CreateShaderProgram(glVertextShaderId, glFragmentShaderId);
+
+            _programs[name] = new Shader(CreateShaderProgram(glVertextShaderId, glFragmentShaderId), name);
+
             _gl.DeleteShader(glVertextShaderId);
             _gl.DeleteShader(glFragmentShaderId);
         }
@@ -36,7 +38,7 @@ namespace Common
         public static void Clear()
         {
             foreach (var item in _programs.Values)
-                _gl.DeleteShader(item);
+                _gl.DeleteShader(item.Id);
         }
 
         private static uint CreateShaderProgram(uint glVertextShaderId, uint glFragmentShaderId)

@@ -2,6 +2,7 @@
 using Common;
 using Silk.NET.GLFW;
 using Silk.NET.OpenGL;
+using System.Drawing;
 
 namespace _04_Hello_Triangle
 {
@@ -9,10 +10,11 @@ namespace _04_Hello_Triangle
     {
         float[] _vertrices = new[]
         {
-             0.5f,  0.5f, 0.0f,  // top right
-             0.5f, -0.5f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f,  0.5f, 0.0f   // top left 
+            // positions        // colors
+             0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,// top right
+             0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, // bottom left
+            -0.5f,  0.5f, 0.0f, 0.5f, 0.5f, 0.5f // top left 
         };
 
         uint[] _indices = new uint[]
@@ -30,7 +32,7 @@ namespace _04_Hello_Triangle
         uint VertexArrayObject = default;
         uint ElementBufferObject = default;
 
-        uint ShaderID = default;
+        Common.Shader Shader = null;
 
         public void Draw()
         {
@@ -38,16 +40,21 @@ namespace _04_Hello_Triangle
             _gl.Clear(ClearBufferMask.ColorBufferBit);
 
 
-            _gl.UseProgram(ShaderID);
+            var runtime = (float)_glfw.GetTime();
+            var opacity = MathF.Sin(runtime);
+            Shader.Use();
+            Shader.SetFloat("opacity", opacity);
+            
             _gl.BindVertexArray(VertexArrayObject);
             _gl.DrawElements(_Draw.Triangles, 6, _DataType.UnsignedInt, (void*)0);
 
             _glfw.SwapBuffers(window);
             _glfw.PollEvents();
         }
+
         public void Run()
         {
-            ShaderID = ShaderLoader.First().Id;
+            Shader = ShaderLoader.First();
 
             _gl.GenVertexArrays(1, out VertexArrayObject);
             _gl.GenBuffers(1, out VertexBufferObject);
@@ -56,19 +63,18 @@ namespace _04_Hello_Triangle
             _gl.BindVertexArray(VertexArrayObject);
 
             _gl.BindBuffer(_Buffer.ArrayBuffer, VertexBufferObject);
-            fixed (float* vboData = _vertrices)
-            {
-                _gl.BufferData(_Buffer.ArrayBuffer, _vertrices.SizeOf(), vboData, _Draw.StaticDraw);
-            }
+            var vboData = new ReadOnlySpan<float>(_vertrices);
+            _gl.BufferData(_Buffer.ArrayBuffer, _vertrices.SizeOf(), vboData, _Draw.StaticDraw);
 
             _gl.BindBuffer(_Buffer.ElementArrayBuffer, ElementBufferObject);
-            fixed (uint* eboData = _indices)
-            {
-                _gl.BufferData(_Buffer.ElementArrayBuffer, _indices.SizeOf(), eboData, _Draw.StaticDraw);
-            }
+            var eboData = new ReadOnlySpan<uint>(_indices);
+            _gl.BufferData(_Buffer.ElementArrayBuffer, _indices.SizeOf(), eboData, _Draw.StaticDraw);
 
-            _gl.VertexAttribPointer(0, 3, _DataType.Float, false, 3.TimesSizeOfFloat(), (void*)0);
+            _gl.VertexAttribPointer(0, 3, _DataType.Float, false, 6.TimesSizeOfFloat(), (void*)0);
             _gl.EnableVertexAttribArray(0);
+
+            _gl.VertexAttribPointer(1, 3, _DataType.Float, false, 6.TimesSizeOfFloat(), (void*)(3.TimesSizeOfFloat()));
+            _gl.EnableVertexAttribArray(1);
 
             _gl.BindBuffer(_Buffer.ArrayBuffer, 0);
             _gl.BindVertexArray(0);
