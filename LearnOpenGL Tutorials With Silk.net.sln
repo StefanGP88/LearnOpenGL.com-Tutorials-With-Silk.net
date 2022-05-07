@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 Getting started", "01 Ge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04 Hello Triangle", "04 Hello Triangle\04 Hello Triangle.csproj", "{81279D91-B966-42CA-B8DF-A7E10F14D9A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05 Shaders", "05 Shaders\05 Shaders.csproj", "{E7C404E6-C525-431D-AD05-BCC075C6A50E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05 Shaders", "05 Shaders\05 Shaders.csproj", "{E7C404E6-C525-431D-AD05-BCC075C6A50E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06 Textures", "06 Textures\06 Textures.csproj", "{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{E7C404E6-C525-431D-AD05-BCC075C6A50E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7C404E6-C525-431D-AD05-BCC075C6A50E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7C404E6-C525-431D-AD05-BCC075C6A50E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{81279D91-B966-42CA-B8DF-A7E10F14D9A8} = {E0B320D7-10B7-4613-A324-93A52CA150BE}
 		{E7C404E6-C525-431D-AD05-BCC075C6A50E} = {E0B320D7-10B7-4613-A324-93A52CA150BE}
+		{2C9F51C8-8FF3-4DF3-97A0-E42369DEE322} = {E0B320D7-10B7-4613-A324-93A52CA150BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {99CD8AC9-86F9-413D-8C89-96B76A5AB805}
