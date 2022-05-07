@@ -43,11 +43,11 @@ namespace _04_Hello_Triangle
             _gl.Clear(ClearBufferMask.ColorBufferBit);
         
             Shader.Use();
-            _gl.ActiveTexture(_Texture.Texture0);
-            _gl.BindTexture(_Texture.Texture2D, WallTexture.Id);
+            _gl.ActiveTexture(_Sampler.Texture0);
+            _gl.BindTexture(_TextureType.Texture2D, WallTexture.Id);
 
-            _gl.ActiveTexture(_Texture.Texture1);
-            _gl.BindTexture(_Texture.Texture2D, GraffitiTexture.Id);
+            _gl.ActiveTexture(_Sampler.Texture1);
+            _gl.BindTexture(_TextureType.Texture2D, GraffitiTexture.Id);
 
             var runtime = (float)_glfw.GetTime();
             var opacity = MathF.Sin(runtime);
@@ -83,17 +83,17 @@ namespace _04_Hello_Triangle
             var eboData = new ReadOnlySpan<uint>(_indices);
             _gl.BufferData(_Buffer.ElementArrayBuffer, _indices.SizeOf(), eboData, _Draw.StaticDraw);
 
-            _gl.ActiveTexture(_Texture.Texture0);
-            _gl.BindTexture(_Texture.Texture2D, WallTexture.Id);
+            _gl.ActiveTexture(_Sampler.Texture0);
+            _gl.BindTexture(_TextureType.Texture2D, WallTexture.Id);
             var wallTextureData = new ReadOnlySpan<byte>(WallTexture.Data);
-            _gl.TexImage2D(_Texture.Texture2D, 0, (int)_Pixels.Rgba, WallTexture.Width, WallTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, wallTextureData);
-            _gl.GenerateMipmap(_Texture.Texture2D);
+            _gl.TexImage2D(_TextureType.Texture2D, 0, (int)_Pixels.Rgba, WallTexture.Width, WallTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, wallTextureData);
+            _gl.GenerateMipmap(_TextureType.Texture2D);
 
-            _gl.ActiveTexture(_Texture.Texture1);
-            _gl.BindTexture(_Texture.Texture2D, GraffitiTexture.Id);
+            _gl.ActiveTexture(_Sampler.Texture1);
+            _gl.BindTexture(_TextureType.Texture2D, GraffitiTexture.Id);
             var graffitiTextureData = new ReadOnlySpan<byte>(GraffitiTexture.Data);
-            _gl.TexImage2D(_Texture.Texture2D, 0, (int)_Pixels.Rgba, GraffitiTexture.Width, GraffitiTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, graffitiTextureData);
-            _gl.GenerateMipmap(_Texture.Texture2D);
+            _gl.TexImage2D(_TextureType.Texture2D, 0, (int)_Pixels.Rgba, GraffitiTexture.Width, GraffitiTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, graffitiTextureData);
+            _gl.GenerateMipmap(_TextureType.Texture2D);
 
 
             _gl.VertexAttribPointer(0, 3, _DataType.Float, false, 8.TimesSizeOfFloat(), (void*)0);

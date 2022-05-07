@@ -38,12 +38,16 @@ namespace Common
         public static GLEnum UnsignedByte => GLEnum.UnsignedByte;
     }
 
-    public class _Texture
+    public class _TextureType
     {
         public static GLEnum Texture2D => GLEnum.Texture2D;
+    }
+
+    public class _Sampler
+    {
         public static GLEnum Texture0 => GLEnum.Texture0;
         public static GLEnum Texture1 => GLEnum.Texture1;
-        //public static GLEnum Texture2 => GLEnum.Texture2;
+        public static GLEnum Texture2 => GLEnum.Texture2;
         //public static GLEnum Texture3 => GLEnum.Texture3;
         //public static GLEnum Texture4 => GLEnum.Texture4;
         //public static GLEnum Texture5 => GLEnum.Texture5;
