@@ -26,5 +26,11 @@ namespace Common
             var location = _gl.GetUniformLocation(shader.Id, name);
             _gl.Uniform1(location, value);
         }
+
+        public static void SetInt(this Shader shader, string name, int value)
+        {
+            var location = _gl.GetUniformLocation(shader.Id, name);
+            _gl.Uniform1(location, value);
+        }
     }
 }

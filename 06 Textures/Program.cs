@@ -34,18 +34,24 @@ namespace _04_Hello_Triangle
 
         Common.Shader Shader = default!;
 
-        Common.Texture Texture = default!;
+        Common.Texture WallTexture = default!;
+        Common.Texture GraffitiTexture = default!;
 
         public void Draw()
         {
             _gl.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             _gl.Clear(ClearBufferMask.ColorBufferBit);
-            _gl.BindTexture(_Texture.Texture2D, Texture.Id);
+        
+            Shader.Use();
+            _gl.ActiveTexture(_Texture.Texture0);
+            _gl.BindTexture(_Texture.Texture2D, WallTexture.Id);
 
+            _gl.ActiveTexture(_Texture.Texture1);
+            _gl.BindTexture(_Texture.Texture2D, GraffitiTexture.Id);
 
             var runtime = (float)_glfw.GetTime();
             var opacity = MathF.Sin(runtime);
-            Shader.Use();
+            
             Shader.SetFloat("opacity", opacity);
 
             _gl.BindVertexArray(VertexArrayObject);
@@ -58,12 +64,14 @@ namespace _04_Hello_Triangle
         public void Run()
         {
             Shader = ShaderLoader.First();
-            Texture = Common.Texture.Load("Texture.png");
+            WallTexture = Common.Texture.Load("WallTexture.png");
+            GraffitiTexture = Common.Texture.Load("GraffitiTexture.png");
 
             _gl.GenVertexArrays(1, out VertexArrayObject);
             _gl.GenBuffers(1, out VertexBufferObject);
             _gl.GenBuffers(1, out ElementBufferObject);
-            _gl.GenTextures(1, out Texture.Id);
+            _gl.GenTextures(1, out WallTexture.Id);
+            _gl.GenTextures(1, out GraffitiTexture.Id);
 
             _gl.BindVertexArray(VertexArrayObject);
 
@@ -75,10 +83,18 @@ namespace _04_Hello_Triangle
             var eboData = new ReadOnlySpan<uint>(_indices);
             _gl.BufferData(_Buffer.ElementArrayBuffer, _indices.SizeOf(), eboData, _Draw.StaticDraw);
 
-            _gl.BindTexture(_Texture.Texture2D, Texture.Id);
-            var textureData = new ReadOnlySpan<byte>(Texture.Data);
-            _gl.TexImage2D(_Texture.Texture2D, 0, (int)_Pixels.Rgba, Texture.Width, Texture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, textureData);
+            _gl.ActiveTexture(_Texture.Texture0);
+            _gl.BindTexture(_Texture.Texture2D, WallTexture.Id);
+            var wallTextureData = new ReadOnlySpan<byte>(WallTexture.Data);
+            _gl.TexImage2D(_Texture.Texture2D, 0, (int)_Pixels.Rgba, WallTexture.Width, WallTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, wallTextureData);
             _gl.GenerateMipmap(_Texture.Texture2D);
+
+            _gl.ActiveTexture(_Texture.Texture1);
+            _gl.BindTexture(_Texture.Texture2D, GraffitiTexture.Id);
+            var graffitiTextureData = new ReadOnlySpan<byte>(GraffitiTexture.Data);
+            _gl.TexImage2D(_Texture.Texture2D, 0, (int)_Pixels.Rgba, GraffitiTexture.Width, GraffitiTexture.Height, 0, _Pixels.Rgba, _DataType.UnsignedByte, graffitiTextureData);
+            _gl.GenerateMipmap(_Texture.Texture2D);
+
 
             _gl.VertexAttribPointer(0, 3, _DataType.Float, false, 8.TimesSizeOfFloat(), (void*)0);
             _gl.EnableVertexAttribArray(0);
@@ -91,6 +107,10 @@ namespace _04_Hello_Triangle
 
             _gl.BindBuffer(_Buffer.ArrayBuffer, 0);
             _gl.BindVertexArray(0);
+
+            Shader.Use();
+            Shader.SetInt("texture1", 0);
+            Shader.SetInt("texture2", 1);
 
             while (!_glfw.WindowShouldClose(window))
             {

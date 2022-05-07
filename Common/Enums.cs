@@ -41,6 +41,22 @@ namespace Common
     public class _Texture
     {
         public static GLEnum Texture2D => GLEnum.Texture2D;
+        public static GLEnum Texture0 => GLEnum.Texture0;
+        public static GLEnum Texture1 => GLEnum.Texture1;
+        //public static GLEnum Texture2 => GLEnum.Texture2;
+        //public static GLEnum Texture3 => GLEnum.Texture3;
+        //public static GLEnum Texture4 => GLEnum.Texture4;
+        //public static GLEnum Texture5 => GLEnum.Texture5;
+        //public static GLEnum Texture6 => GLEnum.Texture6;
+        //public static GLEnum Texture7 => GLEnum.Texture7;
+        //public static GLEnum Texture8 => GLEnum.Texture8;
+        //public static GLEnum Texture9 => GLEnum.Texture9;
+        //public static GLEnum Texture10 => GLEnum.Texture10;
+        //public static GLEnum Texture11 => GLEnum.Texture11;
+        //public static GLEnum Texture12 => GLEnum.Texture12;
+        //public static GLEnum Texture13 => GLEnum.Texture13;
+        //public static GLEnum Texture14 => GLEnum.Texture14;
+        //public static GLEnum Texture15 => GLEnum.Texture15;
     }
 
     public class _Pixels

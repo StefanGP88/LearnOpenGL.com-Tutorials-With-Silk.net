@@ -1,5 +1,6 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace Common
 {
@@ -12,6 +13,7 @@ namespace Common
         public static Texture Load(byte[] imageFileData)
         {
             using Image<Rgba32> image = Image.Load<Rgba32>(imageFileData);
+            image.Mutate(x => x.Flip(FlipMode.Vertical));
 
             Span<byte> imageDataBuffer = new byte[image.Width * image.Height * sizeof(float)];
             image.CopyPixelDataTo(imageDataBuffer);
