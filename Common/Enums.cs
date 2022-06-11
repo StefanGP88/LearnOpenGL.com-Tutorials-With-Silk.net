@@ -68,5 +68,10 @@ namespace Common
         public static GLEnum Rgba => GLEnum.Rgba;
         public static GLEnum Rgb => GLEnum.Rgb;
     }
+
+    public class _Enable
+    {
+        public static GLEnum DepthTest => GLEnum.DepthTest;
+    }
 }
 #pragma warning restore IDE1006 // Naming Styles

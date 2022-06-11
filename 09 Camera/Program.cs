@@ -27,7 +27,7 @@ namespace _09_Camera
         public void Draw()
         {
             _gl.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            _gl.Clear(ClearBufferMask.ColorBufferBit);
+            _gl.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
             Shader.Use();
 

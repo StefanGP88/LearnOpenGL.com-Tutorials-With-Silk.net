@@ -68,6 +68,8 @@ namespace Common
 
             _glfw.MakeContextCurrent(_window);
             _gl.Viewport(0, 0, (uint)Settings.View.Width, (uint)Settings.View.Height);
+            _gl.Enable(_Enable.DepthTest);
+
             _glfw.SetInputMode(_window, CursorStateAttribute.Cursor, CursorModeValue.CursorDisabled);
             GLDebug.EnableGLDebug();
 
