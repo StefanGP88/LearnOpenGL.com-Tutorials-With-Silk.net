@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace _08_Cordinate_Systems
+namespace _09_Camera
 {
     internal class SquareGeometry
     {

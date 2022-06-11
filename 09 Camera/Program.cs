@@ -1,13 +1,15 @@
-﻿using Common;
+﻿using _09_Camera;
+using Common;
 using Silk.NET.GLFW;
 using Silk.NET.OpenGL;
 using System.Numerics;
 
-namespace _08_Cordinate_Systems
+namespace _09_Camera
 {
     internal unsafe class Tutorial
     {
-        SquareGeometry _plane = new SquareGeometry();
+        //SquareGeometry _geometry = new SquareGeometry();
+        BoxGeometry _geometry = new BoxGeometry();
 
         GL _gl = Factory.GetOpenGL();
         Glfw _glfw = Factory.GetGlfw();
@@ -31,7 +33,7 @@ namespace _08_Cordinate_Systems
 
             Shader.SetMatrix4x4("view", Camera3D.LookAtMatrix);
             Shader.SetMatrix4x4("projection", Camera3D.ProjectionMatrix);
-            Shader.SetMatrix4x4("model", Matrix4x4.CreateTranslation(_plane.Position));
+            Shader.SetMatrix4x4("model", Matrix4x4.CreateTranslation(_geometry.Position));
 
             _gl.ActiveTexture(_Sampler.Texture0);
             _gl.BindTexture(_TextureType.Texture2D, WallTexture.Id);
@@ -45,7 +47,7 @@ namespace _08_Cordinate_Systems
             Shader.SetFloat("opacity", opacity);
 
             _gl.BindVertexArray(VertexArrayObject);
-            _gl.DrawElements(_Draw.Triangles, 6, _DataType.UnsignedInt, (void*)0);
+            _gl.DrawElements(_Draw.Triangles, (uint)_geometry._indices.Length, _DataType.UnsignedInt, (void*)0);
 
             _glfw.SwapBuffers(window);
             _glfw.PollEvents();
@@ -66,12 +68,12 @@ namespace _08_Cordinate_Systems
             _gl.BindVertexArray(VertexArrayObject);
 
             _gl.BindBuffer(_Buffer.ArrayBuffer, VertexBufferObject);
-            var vboData = new ReadOnlySpan<float>(_plane._vertrices);
-            _gl.BufferData(_Buffer.ArrayBuffer, _plane._vertrices.SizeOf(), vboData, _Draw.StaticDraw);
+            var vboData = new ReadOnlySpan<float>(_geometry._vertrices);
+            _gl.BufferData(_Buffer.ArrayBuffer, _geometry._vertrices.SizeOf(), vboData, _Draw.StaticDraw);
 
             _gl.BindBuffer(_Buffer.ElementArrayBuffer, ElementBufferObject);
-            var eboData = new ReadOnlySpan<uint>(_plane._indices);
-            _gl.BufferData(_Buffer.ElementArrayBuffer, _plane._indices.SizeOf(), eboData, _Draw.StaticDraw);
+            var eboData = new ReadOnlySpan<uint>(_geometry._indices);
+            _gl.BufferData(_Buffer.ElementArrayBuffer, _geometry._indices.SizeOf(), eboData, _Draw.StaticDraw);
 
             _gl.ActiveTexture(_Sampler.Texture0);
             _gl.BindTexture(_TextureType.Texture2D, WallTexture.Id);
